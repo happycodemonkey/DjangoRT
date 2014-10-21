@@ -1,0 +1,7 @@
+<h1>Reply to {{ ticket_id }} : {{ ticket.Subject }}</h1>
+
+<form action="" method="POST">
+	{% csrf_token %}
+	{{ form.as_p }}
+	<input type="submit" value="Reply" />
+</form>
