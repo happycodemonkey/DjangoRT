@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from djangoRT import rtUtil, forms
+from djangoRT import rtUtil, forms, rtModels
 from djangoRT_settings import BASE_URL
 
 def mytickets(request):
@@ -15,13 +15,25 @@ def ticketdetail(request, ticketId):
 	return render(request, 'ticketDetail.html', { 'ticket' : ticket, 'ticket_history' : ticket_history, 'ticket_id' : ticketId, 'BASE_URL' : BASE_URL })
 
 def ticketcreate(request):
+	rt = rtUtil.DjangoRt()
 	data = { 'email' : request.user.email, 'first_name' : request.user.first_name, 'last_name' : request.user.last_name}
 
 	if request.method == 'POST':
 		form = forms.TicketForm(request.POST)
 
 		if form.is_valid():
-			return HttpResponseRedirect(BASE_URL)
+			ticket = rtModels.Ticket(subject = form.cleaned_data['subject'], 
+					problem_description = form.cleaned_data['problem_description'], 
+					requestor = form.cleaned_data['email'])
+			ticket_id = rt.createTicket(ticket)
+			
+			if ticket_id > -1:
+				return HttpResponseRedirect(BASE_URL + 'ticket/' + str(ticket_id))
+			else:
+				# make this cleaner probably
+				data['subject'] = ticket.subject
+				data['problem_description'] = ticket.problem_description
+				form = forms.TicketForm(data)
 	else:
 		form = forms.TicketForm(data)
 	return render(request, 'ticketCreate.html', { 'form' : form, 'BASE_URL' : BASE_URL }) 
@@ -34,7 +46,11 @@ def ticketreply(request, ticketId):
 		form = forms.ReplyForm(request.POST)
 
 		if form.is_valid():
-			return HttpResponseRedirect(BASE_URL + 'ticket/' + ticketId)
+			if rt.replyToTicket(ticketId, form.cleaned_data['reply']):
+				return HttpResponseRedirect(BASE_URL + 'ticket/' + ticketId)
+			else:
+				data['reply'] = form.cleaned_data['reply']
+				form = forms.ReplyForm(data)
 
 	else:
 		form = forms.ReplyForm()
