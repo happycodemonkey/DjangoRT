@@ -55,3 +55,4 @@ target/
 
 *.swp
 chameleonAppEnv/settings.py
+djangoRT/djangoRT_settings.py

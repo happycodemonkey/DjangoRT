@@ -7,7 +7,7 @@ class TicketForm(forms.Form):
 	first_name = forms.CharField(label='First name', max_length=100, required=True)
 	last_name = forms.CharField(label='Last name', max_length=100, required=True)
 	email = forms.EmailField(label='Email', required=True)
-	cc = forms.EmailField(label='CC') # make this so that you can add multiple?
+	cc = forms.EmailField(label='CC', required=False) # make this so that you can add multiple?
 	category = forms.ChoiceField(label='Category', choices=rt.getCategories(), required=True)
 	system = forms.MultipleChoiceField(label='System', choices=rt.getSystems(), required=True)
 	subject = forms.CharField(label='Subject', max_length=100, required=True)
