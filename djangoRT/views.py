@@ -2,22 +2,29 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from djangoRT import rtUtil, forms, rtModels
 from djangoRT_settings import BASE_URL
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def mytickets(request):
 	rt = rtUtil.DjangoRt()
 	user_tickets = rt.getUserTickets(request.user.email)
 	return render(request, 'ticketList.html', { 'user_tickets' : user_tickets})
 
+@login_required
 def ticketdetail(request, ticketId):
 	rt = rtUtil.DjangoRt()
 
+	
 	ticket = rt.getTicket(ticketId)
 	ticket_history = rt.getTicketHistory(ticketId)
 	return render(request, 'ticketDetail.html', { 'ticket' : ticket, 'ticket_history' : ticket_history, 'ticket_id' : ticketId, 'BASE_URL' : BASE_URL, 'hasAccess' : rt.hasAccess(ticketId, request.user.email) })
 
 def ticketcreate(request):
 	rt = rtUtil.DjangoRt()
-	data = { 'email' : request.user.email, 'first_name' : request.user.first_name, 'last_name' : request.user.last_name}
+
+	data = {}
+	if request.user.is_authenticated():
+		data = { 'email' : request.user.email, 'first_name' : request.user.first_name, 'last_name' : request.user.last_name}
 
 	if request.method == 'POST':
 		form = forms.TicketForm(request.POST)
@@ -41,6 +48,7 @@ def ticketcreate(request):
 		form = forms.TicketForm(data)
 	return render(request, 'ticketCreate.html', { 'form' : form, 'BASE_URL' : BASE_URL }) 
 
+@login_required
 def ticketreply(request, ticketId):
 	rt = rtUtil.DjangoRt()
 

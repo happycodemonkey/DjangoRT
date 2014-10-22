@@ -37,9 +37,12 @@ class DjangoRt:
 		return self.tracker.reply(ticket_id, text=reply_text)
 
 	# Checks if the current user is a requestor or CC on the ticket
-	def hasAccess(self, ticket_id, user):
-		ticket = self.tracker.get_ticket(ticket_id)	
-		if user in ticket.get('Requestors', '') or user in ticket.get('Cc', ''):
-			return True
+	# Also doesn't crap out if the user isn't logged in even though
+	# we should be checking before calling this
+	def hasAccess(self, ticket_id, user = None):
+		if user and ticket_id:
+			ticket = self.tracker.get_ticket(ticket_id)	
+			if user in ticket.get('Requestors', '') or user in ticket.get('Cc', ''):
+				return True
 
 		return False
