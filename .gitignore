@@ -54,5 +54,5 @@ docs/_build/
 target/
 
 *.swp
-chameleonAppEnv/settings.py
+djangoRTAppEnv/settings.py
 djangoRT/djangoRT_settings.py
