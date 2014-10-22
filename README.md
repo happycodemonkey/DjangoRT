@@ -1,7 +1,7 @@
-ChameleonRT
+DjangoRT
 ===========
 
-An RT interface for the Django-powered Chameleon Portal
+An RT interface for your Django-powered sites
 
 Requires: https://gitlab.labs.nic.cz/labs/python-rt
 
