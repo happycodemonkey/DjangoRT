@@ -30,7 +30,8 @@ class DjangoRt:
 		return self.tracker.create_ticket(Queue=RT_QUEUE, 
 				Subject=ticket.subject, 
 				Text=ticket.problem_description, 
-				Requestors=ticket.requestor)
+				Requestors=ticket.requestor,
+				Cc=",".join(ticket.cc))
 
 	def replyToTicket(self, ticket_id, reply_text):
 		return self.tracker.reply(ticket_id, text=reply_text)

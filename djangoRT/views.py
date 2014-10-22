@@ -24,7 +24,8 @@ def ticketcreate(request):
 		if form.is_valid():
 			ticket = rtModels.Ticket(subject = form.cleaned_data['subject'], 
 					problem_description = form.cleaned_data['problem_description'], 
-					requestor = form.cleaned_data['email'])
+					requestor = form.cleaned_data['email'],
+					cc = form.cleaned_data['cc'])
 			ticket_id = rt.createTicket(ticket)
 			
 			if ticket_id > -1:
@@ -33,6 +34,7 @@ def ticketcreate(request):
 				# make this cleaner probably
 				data['subject'] = ticket.subject
 				data['problem_description'] = ticket.problem_description
+				data['cc'] = ticket.cc
 				form = forms.TicketForm(data)
 	else:
 		form = forms.TicketForm(data)
