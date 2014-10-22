@@ -1,3 +1,7 @@
+{% if not hasAccess %}
+	{% include "access_denied.html" %}
+	{% include "navigation.html" %}
+{% else %}
 <b>Ticket #{{ ticket_id }} : {{ ticket.Subject }} </b>
 <br />
 <a href="{{BASE_URL}}ticket/reply/{{ticket_id}}">Reply to this ticket</a>
@@ -12,5 +16,7 @@
 		<br /><hr />
 	{% endif %}
 {% endfor %}
+{% endif %}
+
 
 

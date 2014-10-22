@@ -10,9 +10,10 @@ def mytickets(request):
 
 def ticketdetail(request, ticketId):
 	rt = rtUtil.DjangoRt()
+
 	ticket = rt.getTicket(ticketId)
 	ticket_history = rt.getTicketHistory(ticketId)
-	return render(request, 'ticketDetail.html', { 'ticket' : ticket, 'ticket_history' : ticket_history, 'ticket_id' : ticketId, 'BASE_URL' : BASE_URL })
+	return render(request, 'ticketDetail.html', { 'ticket' : ticket, 'ticket_history' : ticket_history, 'ticket_id' : ticketId, 'BASE_URL' : BASE_URL, 'hasAccess' : rt.hasAccess(ticketId, request.user.email) })
 
 def ticketcreate(request):
 	rt = rtUtil.DjangoRt()
@@ -42,6 +43,7 @@ def ticketcreate(request):
 
 def ticketreply(request, ticketId):
 	rt = rtUtil.DjangoRt()
+
 	ticket = rt.getTicket(ticketId)
 
 	if request.method == 'POST':
@@ -56,4 +58,4 @@ def ticketreply(request, ticketId):
 
 	else:
 		form = forms.ReplyForm()
-	return render(request, 'ticketReply.html', { 'ticket_id' : ticketId , 'ticket' : ticket, 'form' : form, 'BASE_URL' : BASE_URL })
+	return render(request, 'ticketReply.html', { 'ticket_id' : ticketId , 'ticket' : ticket, 'form' : form, 'BASE_URL' : BASE_URL, 'hasAccess' : rt.hasAccess(ticketId, request.user.email) })

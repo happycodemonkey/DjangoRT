@@ -19,11 +19,11 @@ class DjangoRt:
 	def getUserTickets(self, userEmail):
 		return self.tracker.search(Queue=rt.ALL_QUEUES, raw_query="Requestors='" + userEmail + "'", order='-LastUpdated')
 
-	def getTicket(self, ticketId):
-		return self.tracker.get_ticket(ticketId)
+	def getTicket(self, ticket_id):
+		return self.tracker.get_ticket(ticket_id)
 
-	def getTicketHistory(self, ticketId):
-		return self.tracker.get_history(ticketId)
+	def getTicketHistory(self, ticket_id):
+		return self.tracker.get_history(ticket_id)
 
 	# Returns the ticket id of the created ticket
 	def createTicket(self, ticket):
@@ -36,3 +36,10 @@ class DjangoRt:
 	def replyToTicket(self, ticket_id, reply_text):
 		return self.tracker.reply(ticket_id, text=reply_text)
 
+	# Checks if the current user is a requestor or CC on the ticket
+	def hasAccess(self, ticket_id, user):
+		ticket = self.tracker.get_ticket(ticket_id)	
+		if user in ticket.get('Requestors', '') or user in ticket.get('Cc', ''):
+			return True
+
+		return False

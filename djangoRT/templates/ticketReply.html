@@ -1,3 +1,7 @@
+{% if not hasAccess %}
+	{% include "access_denied.html" %}
+{% else %}
+
 <h1>Reply to {{ ticket_id }} : {{ ticket.Subject }}</h1>
 
 <form action="" method="POST">
@@ -6,5 +10,8 @@
 	<input type="submit" value="Reply" />
 </form>
 
+{% endif %}
+
 {% include "navigation.html" %}
+
 
