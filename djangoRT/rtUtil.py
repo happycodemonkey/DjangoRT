@@ -23,11 +23,3 @@ class DjangoRt:
 	def createTicket(self, ticket):
 		return None
 
-	# These should *DEFINITELY* not be in here. This should be 
-	# general-purpose, not TACC/Chameleon specific
-
-	def getCategories(self):
-		return [( "Accounts", "Accounts"), ("Portal", "Portal")]
-
-	def getSystems(self):
-		return [("Rodeo", "Rodeo"), ("Stampede", "Stampede")]

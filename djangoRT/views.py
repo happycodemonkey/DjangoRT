@@ -24,15 +24,13 @@ def ticketcreate(request):
 			return HttpResponseRedirect(BASE_URL)
 	else:
 		form = forms.TicketForm(data)
-	return render(request, 'ticketCreate.html', { 'form' : form }) 
+	return render(request, 'ticketCreate.html', { 'form' : form, 'BASE_URL' : BASE_URL }) 
 
 def ticketreply(request, ticketId):
-	print "Hello!"
 	rt = rtUtil.DjangoRt()
 	ticket = rt.getTicket(ticketId)
 
 	if request.method == 'POST':
-		print "A new post!"
 		form = forms.ReplyForm(request.POST)
 
 		if form.is_valid():
