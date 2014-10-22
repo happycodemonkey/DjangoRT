@@ -1,5 +1,3 @@
-from django.conf import settings
-
 # RT Specific Settings
 RT_HOST = 'YOUR_RT_HOST'
 RT_UN = 'YOUR_RT_UN'
