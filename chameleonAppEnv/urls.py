@@ -7,5 +7,5 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^chameleonRT/', include('chameleonRT.urls')),
+    url(r'^djangoRT/', include('djangoRT.urls')),
 )

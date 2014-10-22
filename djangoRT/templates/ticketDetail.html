@@ -1,6 +1,6 @@
 <b>Ticket #{{ ticket_id }} : {{ ticket.Subject }} </b>
 <br />
-<a href="/chameleonRT/ticket/reply/{{ticket_id}}">Reply to this ticket</a>
+<a href="{{BASE_URL}}ticket/reply/{{ticket_id}}">Reply to this ticket</a>
 {% for history in ticket_history %}
 	{{ history.Content }} <br />
 {% endfor %}

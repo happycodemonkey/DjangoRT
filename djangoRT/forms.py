@@ -1,8 +1,8 @@
 from django import forms
-from chameleonRT import rtUtil
+from djangoRT import rtUtil
 
 class TicketForm(forms.Form):
-	rt = rtUtil.ChameleonRt()
+	rt = rtUtil.DjangoRt()
 
 	first_name = forms.CharField(label='First name', max_length=100, required=True)
 	last_name = forms.CharField(label='Last name', max_length=100, required=True)

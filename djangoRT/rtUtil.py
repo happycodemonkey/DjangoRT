@@ -1,7 +1,7 @@
 import rt
-from chameleonRT_settings import RT_HOST, RT_UN, RT_PW
+from djangoRT_settings import RT_HOST, RT_UN, RT_PW
 
-class ChameleonRt:
+class DjangoRt:
 	
 	def __init__(self):
 		self.rtHost = RT_HOST
@@ -22,6 +22,9 @@ class ChameleonRt:
 
 	def createTicket(self, ticket):
 		return None
+
+	# These should *DEFINITELY* not be in here. This should be 
+	# general-purpose, not TACC/Chameleon specific
 
 	def getCategories(self):
 		return [( "Accounts", "Accounts"), ("Portal", "Portal")]

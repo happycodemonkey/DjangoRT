@@ -36,7 +36,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'chameleonRT',
+    'djangoRT',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -83,8 +83,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# Chameleon-RT Specific Settings
-CHAMELEON_RT_HOST = 'YOUR_RT_HOST'
-CHAMELEON_RT_UN = 'YOUR_RT_UN'
-CHAMELEON_RT_PW = 'YOUR_RT_PW'
-CHAMELEON_RT_QUEUE = 'YOUR_QUEUE'
+# RT Specific Settings
+RT_HOST = 'YOUR_RT_HOST'
+RT_UN = 'YOUR_RT_UN'
+RT_PW = 'YOUR_RT_PW'
+RT_QUEUE = 'YOUR_QUEUE'

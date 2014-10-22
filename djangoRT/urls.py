@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, url
 
-from chameleonRT import views
+from djangoRT import views
 
 urlpatterns = patterns('',
 		url(r'^$', views.mytickets, name='mytickets'),
