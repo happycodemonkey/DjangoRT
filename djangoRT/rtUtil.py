@@ -7,11 +7,7 @@ class DjangoRt:
 		self.rtHost = RT_HOST
 		self.rtUn = RT_UN
 		self.rtPw = RT_PW
-
-		if RT_QUEUE == 'RT_QUEUE' or RT_QUEUE == '':
-			self.rtQueue = rt.ALL_QUEUES
-		else:
-			self.rtQueue = RT_QUEUE
+		self.rtQueue = RT_QUEUE
 
 		self.tracker = rt.Rt(self.rtHost, self.rtUn, self.rtPw, basic_auth=(self.rtUn, self.rtPw))
 		self.tracker.login()
@@ -27,7 +23,7 @@ class DjangoRt:
 
 	# Returns the ticket id of the created ticket
 	def createTicket(self, ticket):
-		return self.tracker.create_ticket(Queue=RT_QUEUE, 
+		return self.tracker.create_ticket(Queue=self.rtQueue, 
 				Subject=ticket.subject, 
 				Text=ticket.problem_description, 
 				Requestors=ticket.requestor,
