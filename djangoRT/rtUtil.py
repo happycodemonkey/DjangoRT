@@ -17,7 +17,7 @@ class DjangoRt:
 		self.tracker.login()
 
 	def getUserTickets(self, userEmail):
-		return self.tracker.search(Queue=rt.ALL_QUEUES, raw_query="Requestors='" + userEmail + "'")
+		return self.tracker.search(Queue=rt.ALL_QUEUES, raw_query="Requestors='" + userEmail + "'", order='-LastUpdated')
 
 	def getTicket(self, ticketId):
 		return self.tracker.get_ticket(ticketId)
