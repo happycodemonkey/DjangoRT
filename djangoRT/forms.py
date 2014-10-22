@@ -24,7 +24,7 @@ class TicketForm(forms.Form):
 	first_name = forms.CharField(label='First name', max_length=100, required=True)
 	last_name = forms.CharField(label='Last name', max_length=100, required=True)
 	email = forms.EmailField(label='Email', required=True)
-	cc = MultiEmailField(required=False)
+	cc = MultiEmailField(required=False, help_text='Multiple emails should be comma-separated')
 	subject = forms.CharField(label='Subject', max_length=100, required=True)
 	problem_description = forms.CharField(label='Problem Description', required=True, widget=forms.Textarea)
 
