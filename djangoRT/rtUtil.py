@@ -3,6 +3,12 @@ from djangoRT_settings import RT_HOST, RT_UN, RT_PW, RT_QUEUE
 
 class DjangoRt:
 	
+	CLOSED = 'closed'
+	RESOLVED = 'resolved'
+	OPEN = 'open'
+	NEW = 'new'
+	RESPONSE_REQUIRED = 'response required'
+
 	def __init__(self):
 		self.rtHost = RT_HOST
 		self.rtUn = RT_UN
@@ -11,9 +17,17 @@ class DjangoRt:
 
 		self.tracker = rt.Rt(self.rtHost, self.rtUn, self.rtPw, basic_auth=(self.rtUn, self.rtPw))
 		self.tracker.login()
+	
+	def fixId(self, ticket_list = []):
+		for ticket in ticket_list:
+			ticket['id'] = ticket['id'].replace('ticket/','')
 
-	def getUserTickets(self, userEmail):
-		return self.tracker.search(Queue=rt.ALL_QUEUES, raw_query="Requestors='" + userEmail + "'", order='-LastUpdated')
+		return ticket_list
+
+	def getUserTickets(self, userEmail, status="ALL"):
+		if not status == "ALL":
+			return self.fixId(self.tracker.search(Queue=rt.ALL_QUEUES, Requestors__exact=userEmail, Status__exact=status, order='-LastUpdated'))
+		return self.fixId(self.tracker.search(Queue=rt.ALL_QUEUES, Requestors__exact=userEmail, order='-LastUpdated'))
 
 	def getTicket(self, ticket_id):
 		return self.tracker.get_ticket(ticket_id)
@@ -42,3 +56,4 @@ class DjangoRt:
 				return True
 
 		return False
+

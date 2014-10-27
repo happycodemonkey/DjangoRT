@@ -4,10 +4,21 @@
 
 <h1>Reply to {{ ticket_id }} : {{ ticket.Subject }}</h1>
 
+<div class='reply_description'>
+{% if ticket.Status == 'resolved' or ticket.Status == 'closed' %}
+	Please provide a message to explain why you are reopening this ticket.
+{% endif %}
+</div>
+
 <form action="" method="POST">
 	{% csrf_token %}
 	{{ form.as_p }}
-	<input type="submit" value="Reply" />
+
+	{% if ticket.Status == 'resolved' or ticket.Status == 'closed' %}
+		<input type="submit" value="Reopen" />
+	{% else %}
+		<input type="submit" value="Reply" />
+	{% endif %}
 </form>
 
 {% endif %}

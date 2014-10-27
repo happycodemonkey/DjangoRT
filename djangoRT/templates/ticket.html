@@ -1,0 +1,11 @@
+<div class="ticket {{ticket.id}}">
+	{{ticket.Status}} &nbsp;&nbsp;
+	<a href="{{BASE_URL}}ticket/{{ ticket.id }}"> #{{ ticket.id }} : {{ ticket.Subject }}</a>  &nbsp;&nbsp;
+	{{ticket.LastUpdated}}
+	{% if ticket.Status == 'resolved' or ticket.Status == 'closed' %}
+		<a href="{{BASE_URL}}ticket/reply/{{ticket.id}}">Reopen to this ticket</a>
+	{% else %}
+		<a href="{{BASE_URL}}ticket/reply/{{ticket.id}}">Reply to this ticket</a>
+	{% endif %}
+</div>
+

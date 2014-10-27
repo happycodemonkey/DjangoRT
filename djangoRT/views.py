@@ -7,8 +7,14 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def mytickets(request):
 	rt = rtUtil.DjangoRt()
-	user_tickets = rt.getUserTickets(request.user.email)
-	return render(request, 'ticketList.html', { 'user_tickets' : user_tickets})
+	open_tickets = rt.getUserTickets(request.user.email, status="OPEN")
+	new_tickets = rt.getUserTickets(request.user.email, status="NEW")
+	response_tickets = rt.getUserTickets(request.user.email, status="RESPONSE REQUIRED")
+	
+	resolved_tickets = []
+	resolved_tickets = rt.getUserTickets(request.user.email, status="RESOLVED")
+	resolved_tickets.extend(rt.getUserTickets(request.user.email, status="CLOSED"))
+	return render(request, 'ticketList.html', { 'open_tickets' : open_tickets, 'new_tickets' : new_tickets, 'response_tickets' : response_tickets, 'resolved_tickets' : resolved_tickets })
 
 @login_required
 def ticketdetail(request, ticketId):

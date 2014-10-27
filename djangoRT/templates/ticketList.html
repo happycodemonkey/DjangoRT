@@ -1,7 +1,42 @@
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static "djangoRT/css/djangoRT.css" %}"></style>
+<script type="text/javascript" src="{% static "djangoRT/js/jquery.min.js" %}"></script>
+<script type="text/javascript" src="{% static "djangoRT/js/djangoRT.js" %}"></script>
+
 <a href="{{BASE_URL}}ticket/new">Create a new ticket</a>
+<br />
+<br />
+<h3>Current Tickets</h3>
+<select id="select">
+	<option value="new" selected>New</option>
+	<option value="open">Open</option>
+	<option value="response">Response Required</option>
+	<option value="all">All</option>
+</select>
 <br /><br />
-{% for ticket in user_tickets %}
-{{ticket.Status}} &nbsp;&nbsp;
-<a href="{{ ticket.id }}"> # {{ ticket.id }} : {{ ticket.Subject }}</a>  &nbsp;&nbsp;
-{{ticket.LastUpdated}} <br />
-{% endfor %}
+Search <input type="text" class="search" />
+<br /><br />
+<div class="none tickets empty">
+	No tickets to display.
+</div>
+<div class="open tickets none">
+	{% for ticket in open_tickets %}
+		{% include "ticket.html" %}
+	{% endfor %}
+</div>
+<div class="new tickets none">
+	{% for ticket in new_tickets %}
+		{% include "ticket.html" %}
+	{% endfor %}
+</div>
+<div class="response tickets none">
+	{% for ticket in response_tickets %}
+		{% include "ticket.html" %}
+	{% endfor %}
+</div>
+<h3>Resolved Tickets</h3>
+<div class="resolved tickets">
+	{% for ticket in resolved_tickets %}
+		{% include "ticket.html" %}
+	{% endfor %}
+</div>

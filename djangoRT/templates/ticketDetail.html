@@ -8,11 +8,11 @@
 {% include "navigation.html" %}
 {% for history in ticket_history %}
 	{% if history.Type == "Correspond" or history.Type == "Create" %}
-		{{ history.Content }} <br />
+		<pre>{{ history.Content }}</pre> <br />
 		<hr />
 	{% endif %}
 	{% if history.Type == "Status" %}
-		{{ history.Description }}
+		<pre>{{ history.Description }}</pre>
 		<br /><hr />
 	{% endif %}
 {% endfor %}
