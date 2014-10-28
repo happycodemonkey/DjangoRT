@@ -1,9 +1,6 @@
-{% load staticfiles %}
-<link rel="stylesheet" type="text/css" href="{% static "djangoRT/css/djangoRT.css" %}"></style>
-<script type="text/javascript" src="{% static "djangoRT/js/jquery.min.js" %}"></script>
-<script type="text/javascript" src="{% static "djangoRT/js/djangoRT.js" %}"></script>
+{% include "includes.html" %}
 
-<a href="{{BASE_URL}}ticket/new">Create a new ticket</a>
+<i class="fa fa-pencil-square-o"></i>  <a href="{{BASE_URL}}ticket/new">Create a new ticket</a>
 <br />
 <br />
 <h3>Current Tickets</h3>

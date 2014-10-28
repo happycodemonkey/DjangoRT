@@ -1,5 +1,6 @@
 import rt
 from djangoRT_settings import RT_HOST, RT_UN, RT_PW, RT_QUEUE
+from datetime import datetime
 
 class DjangoRt:
 	
@@ -17,23 +18,33 @@ class DjangoRt:
 
 		self.tracker = rt.Rt(self.rtHost, self.rtUn, self.rtPw, basic_auth=(self.rtUn, self.rtPw))
 		self.tracker.login()
-	
-	def fixId(self, ticket_list = []):
+
+	def getUserTickets(self, userEmail, status="ALL"):
+		if not status == "ALL":	
+			ticket_list = self.tracker.search(Queue=rt.ALL_QUEUES, Requestors__exact=userEmail, Status__exact=status, order='-LastUpdated')
+		else:
+			ticket_list = self.tracker.search(Queue=rt.ALL_QUEUES, Requestors__exact=userEmail, order='-LastUpdated')
+
 		for ticket in ticket_list:
-			ticket['id'] = ticket['id'].replace('ticket/','')
+			ticket['id'] = ticket['id'].replace('ticket/', '')
+			ticket['LastUpdated'] = datetime.strptime(ticket['LastUpdated'], '%a %b %d %X %Y')
 
 		return ticket_list
 
-	def getUserTickets(self, userEmail, status="ALL"):
-		if not status == "ALL":
-			return self.fixId(self.tracker.search(Queue=rt.ALL_QUEUES, Requestors__exact=userEmail, Status__exact=status, order='-LastUpdated'))
-		return self.fixId(self.tracker.search(Queue=rt.ALL_QUEUES, Requestors__exact=userEmail, order='-LastUpdated'))
-
 	def getTicket(self, ticket_id):
-		return self.tracker.get_ticket(ticket_id)
+		ticket = self.tracker.get_ticket(ticket_id)
+
+		ticket['id'] = ticket['id'].replace('ticket/', '')
+
+		return ticket
 
 	def getTicketHistory(self, ticket_id):
-		return self.tracker.get_history(ticket_id)
+		ticketHistory = self.tracker.get_history(ticket_id)
+
+		for ticket in ticketHistory:
+			ticket['Created'] = datetime.strptime(ticket['Created'], '%Y-%m-%d %X')
+
+		return ticketHistory
 
 	# Returns the ticket id of the created ticket
 	def createTicket(self, ticket):

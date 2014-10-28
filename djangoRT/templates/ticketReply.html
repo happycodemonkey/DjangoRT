@@ -1,8 +1,14 @@
+{% include "includes.html" %}
 {% if not hasAccess %}
 	{% include "access_denied.html" %}
 {% else %}
 
-<h1>Reply to {{ ticket_id }} : {{ ticket.Subject }}</h1>
+{% include "navigation.html" %}
+{% if ticket.Status == 'resolved' or ticket.Status == 'closed' %}
+	<h1>Reopen {{ ticket_id }} : {{ ticket.Subject }}</h1>
+{% else %}
+	<h1>Reply to {{ ticket_id }} : {{ ticket.Subject }}</h1>
+{% endif %}
 
 <div class='reply_description'>
 {% if ticket.Status == 'resolved' or ticket.Status == 'closed' %}
@@ -23,6 +29,5 @@
 
 {% endif %}
 
-{% include "navigation.html" %}
 
 

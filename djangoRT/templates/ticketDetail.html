@@ -1,21 +1,32 @@
+{% include "includes.html" %}
 {% if not hasAccess %}
 	{% include "access_denied.html" %}
 	{% include "navigation.html" %}
 {% else %}
-<b>Ticket #{{ ticket_id }} : {{ ticket.Subject }} </b>
-<br />
-<a href="{{BASE_URL}}ticket/reply/{{ticket_id}}">Reply to this ticket</a>
 {% include "navigation.html" %}
+<h3>Ticket #{{ ticket_id }} : {{ ticket.Subject }} </h3>
+<div class="reply-link">
+	{% include "reply.html" %}
+</div>
+<div class="history-content-container">
 {% for history in ticket_history %}
+
 	{% if history.Type == "Correspond" or history.Type == "Create" %}
-		<pre>{{ history.Content }}</pre> <br />
-		<hr />
+	<div class="history-content">
+		{{history.Description}} on {{history.Created|date:"F j Y"}}
+		<pre>{{ history.Content }}</pre>
+	</div>
 	{% endif %}
 	{% if history.Type == "Status" %}
+	<div class="history-content">
 		<pre>{{ history.Description }}</pre>
-		<br /><hr />
+	</div>
 	{% endif %}
 {% endfor %}
+</div>
+<div class="reply-link">
+	{% include "reply.html" %}
+</div>
 {% endif %}
 
 

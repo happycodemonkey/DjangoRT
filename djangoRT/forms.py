@@ -29,5 +29,5 @@ class TicketForm(forms.Form):
 	problem_description = forms.CharField(label='Problem Description', required=True, widget=forms.Textarea)
 
 class ReplyForm(forms.Form):
-	reply = forms.CharField(label="Reply", required=True, widget=forms.Textarea)
+	reply = forms.CharField(required=True, widget=forms.Textarea, label="")
 
