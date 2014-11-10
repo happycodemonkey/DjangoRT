@@ -46,3 +46,11 @@
 	overflow-x: auto;
 	width: 100%;
 }
+
+input.ticket-input {
+	width: 30%;
+}
+
+p label {
+	width: 10%;
+}

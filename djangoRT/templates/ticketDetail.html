@@ -1,4 +1,7 @@
+{% extends "layout/default.html" %}
+{% block content %}
 {% include "includes.html" %}
+
 {% if not hasAccess %}
 	{% include "access_denied.html" %}
 	{% include "navigation.html" %}
@@ -28,6 +31,7 @@
 	{% include "reply.html" %}
 </div>
 {% endif %}
+{% endblock %}
 
 
 

@@ -1,6 +1,8 @@
-{% include "includes.html" %}
+{% extends "layout/default.html" %}
+{% block content %}
 
-<i class="fa fa-pencil-square-o"></i>  <a href="{{BASE_URL}}ticket/new">Create a new ticket</a>
+{% include "includes.html" %}
+<h3><i class="fa fa-pencil-square-o"></i>  <a href="{{BASE_URL}}ticket/new">Create a new ticket</a></h3>
 <br />
 <br />
 <h3>Current Tickets</h3>
@@ -37,3 +39,4 @@ Search <input type="text" class="search" />
 		{% include "ticket.html" %}
 	{% endfor %}
 </div>
+{% endblock %}

@@ -1,3 +1,6 @@
+{% extends "layout/default.html" %}
+{% block content %}
+
 {% include "includes.html" %}
 {% if not hasAccess %}
 	{% include "access_denied.html" %}
@@ -5,12 +8,13 @@
 
 {% include "navigation.html" %}
 {% if ticket.Status == 'resolved' or ticket.Status == 'closed' %}
-	<h1>Reopen {{ ticket_id }} : {{ ticket.Subject }}</h1>
+	<h3>Reopen {{ ticket_id }} : {{ ticket.Subject }}</h3>
 {% else %}
-	<h1>Reply to {{ ticket_id }} : {{ ticket.Subject }}</h1>
+	<h3>Reply to {{ ticket_id }} : {{ ticket.Subject }}</h3>
 {% endif %}
 
 <div class='reply_description'>
+	I AM DESCRIBING!
 {% if ticket.Status == 'resolved' or ticket.Status == 'closed' %}
 	Please provide a message to explain why you are reopening this ticket.
 {% endif %}
@@ -28,6 +32,7 @@
 </form>
 
 {% endif %}
+{% endblock %}
 
 
 
