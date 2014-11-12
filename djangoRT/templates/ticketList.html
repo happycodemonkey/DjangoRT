@@ -2,15 +2,15 @@
 {% block content %}
 
 {% include "includes.html" %}
-<h3><i class="fa fa-pencil-square-o"></i>  <a href="{{BASE_URL}}ticket/new">Create a new ticket</a></h3>
+<h3><i class="fa fa-pencil-square-o"></i>  <a href="{% url 'djangoRT.views.ticketcreate' %}">Create a new ticket</a></h3>
 <br />
 <br />
 <h3>Current Tickets</h3>
 <select id="select">
-	<option value="new" selected>New</option>
+	<option value="new">New</option>
 	<option value="open">Open</option>
 	<option value="response">Response Required</option>
-	<option value="all">All</option>
+	<option value="all" selected>All</option>
 </select>
 <br /><br />
 Search <input type="text" class="search" />

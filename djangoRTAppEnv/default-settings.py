@@ -83,3 +83,14 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+#####
+#
+# Django RT Settings
+#
+#####
+DJANGO_RT = {
+    'RT_HOST': 'https://example.com/REST/1.0/',
+    'RT_UN': 'username',
+    'RT_PW': 'password',
+    'RT_QUEUE': 'Helpdesk',
+}
