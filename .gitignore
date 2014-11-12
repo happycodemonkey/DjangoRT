@@ -55,4 +55,4 @@ target/
 
 *.swp
 djangoRTAppEnv/settings.py
-djangoRT/djangoRT_settings.py
+djangoRT/environment-variables.sh
