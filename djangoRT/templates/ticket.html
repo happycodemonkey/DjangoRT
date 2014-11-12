@@ -16,7 +16,7 @@
 		{{ticket.Status}}
 	</div>
 	<div class="title">
-		<a href="{{BASE_URL}}ticket/{{ ticket.id }}"> #{{ ticket.id }} : {{ ticket.Subject }}</a> 
+		<a href="{% url 'djangoRT.views.ticketdetail' ticket.id %}"> #{{ ticket.id }} : {{ ticket.Subject }}</a> 
 	</div>
 	<div class="updated">
 		{{ticket.LastUpdated|date:"F j Y"}}

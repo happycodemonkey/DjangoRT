@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
 from djangoRT import rtUtil, forms, rtModels
-from djangoRT_settings import BASE_URL
 from django.contrib.auth.decorators import login_required
 
 @login_required
@@ -10,7 +10,7 @@ def mytickets(request):
 	open_tickets = rt.getUserTickets(request.user.email, status="OPEN")
 	new_tickets = rt.getUserTickets(request.user.email, status="NEW")
 	response_tickets = rt.getUserTickets(request.user.email, status="RESPONSE REQUIRED")
-	
+
 	resolved_tickets = []
 	resolved_tickets = rt.getUserTickets(request.user.email, status="RESOLVED")
 	resolved_tickets.extend(rt.getUserTickets(request.user.email, status="CLOSED"))
@@ -20,10 +20,10 @@ def mytickets(request):
 def ticketdetail(request, ticketId):
 	rt = rtUtil.DjangoRt()
 
-	
+
 	ticket = rt.getTicket(ticketId)
 	ticket_history = rt.getTicketHistory(ticketId)
-	return render(request, 'ticketDetail.html', { 'ticket' : ticket, 'ticket_history' : ticket_history, 'ticket_id' : ticketId, 'BASE_URL' : BASE_URL, 'hasAccess' : rt.hasAccess(ticketId, request.user.email) })
+	return render(request, 'ticketDetail.html', { 'ticket' : ticket, 'ticket_history' : ticket_history, 'ticket_id' : ticketId, 'hasAccess' : rt.hasAccess(ticketId, request.user.email) })
 
 def ticketcreate(request):
 	rt = rtUtil.DjangoRt()
@@ -36,14 +36,14 @@ def ticketcreate(request):
 		form = forms.TicketForm(request.POST)
 
 		if form.is_valid():
-			ticket = rtModels.Ticket(subject = form.cleaned_data['subject'], 
-					problem_description = form.cleaned_data['problem_description'], 
+			ticket = rtModels.Ticket(subject = form.cleaned_data['subject'],
+					problem_description = form.cleaned_data['problem_description'],
 					requestor = form.cleaned_data['email'],
 					cc = form.cleaned_data['cc'])
 			ticket_id = rt.createTicket(ticket)
-			
+
 			if ticket_id > -1:
-				return HttpResponseRedirect(BASE_URL + 'ticket/' + str(ticket_id))
+				return HttpResponseRedirect( reverse( 'djangoRT.views.ticketdetail', args=[ ticket_id ] ) )
 			else:
 				# make this cleaner probably
 				data['subject'] = ticket.subject
@@ -52,7 +52,7 @@ def ticketcreate(request):
 				form = forms.TicketForm(data)
 	else:
 		form = forms.TicketForm(data)
-	return render(request, 'ticketCreate.html', { 'form' : form, 'BASE_URL' : BASE_URL }) 
+	return render(request, 'ticketCreate.html', { 'form' : form })
 
 @login_required
 def ticketreply(request, ticketId):
@@ -65,11 +65,11 @@ def ticketreply(request, ticketId):
 
 		if form.is_valid():
 			if rt.replyToTicket(ticketId, form.cleaned_data['reply']):
-				return HttpResponseRedirect(BASE_URL + 'ticket/' + ticketId)
+				return HttpResponseRedirect(reverse( 'djangoRT.views.ticketdetail', args=[ ticketId ] ) )
 			else:
 				data['reply'] = form.cleaned_data['reply']
 				form = forms.ReplyForm(data)
 
 	else:
 		form = forms.ReplyForm()
-	return render(request, 'ticketReply.html', { 'ticket_id' : ticketId , 'ticket' : ticket, 'form' : form, 'BASE_URL' : BASE_URL, 'hasAccess' : rt.hasAccess(ticketId, request.user.email) })
+	return render(request, 'ticketReply.html', { 'ticket_id' : ticketId , 'ticket' : ticket, 'form' : form, 'hasAccess' : rt.hasAccess(ticketId, request.user.email) })
