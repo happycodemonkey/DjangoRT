@@ -39,5 +39,10 @@
 			}
 		});
 
+		$('.errorlist').each(function() {
+			$(this).addClass('none');
+			$(this).next('p').addClass('required');
+		});
+
 	});
 })(jQuery);
