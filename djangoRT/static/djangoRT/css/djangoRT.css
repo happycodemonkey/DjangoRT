@@ -20,9 +20,8 @@
 	clear: left;
 }
 
-.current-tickets,
-.resolved-tickets {
-	clear: all;
+.button {
+	font-size: 2em;
 }
 
 .navigation {
