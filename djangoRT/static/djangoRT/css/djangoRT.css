@@ -20,6 +20,11 @@
 	clear: left;
 }
 
+.current-tickets,
+.resolved-tickets {
+	clear: all;
+}
+
 .navigation {
 	float: right;
 }
